@@ -1,0 +1,28 @@
+extends layout
+
+
+block content
+
+    - 
+        let filtered = svavina.filter((obj) => {
+            for(key in obj){
+                //check if object value contains value you are looking for
+                if(obj[key].includes('Lea')){
+                    //add this object to the filtered array
+                    return obj;
+                }
+            }
+        });
+
+    .container
+        .row
+            
+            input(type="text" name="searchBar" id="searchBar" placeholder="Pretraži vina")
+            ul#searchResults
+
+            p #{filtered}
+            
+
+
+
+

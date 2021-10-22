@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        title= `${title} | ${h.siteName}`
+        link(rel='icon' type='image/png' href='./images/favicon-32.png' sizes='32x32')
+        
+        link(rel='stylesheet' href='/unitegallery/css/unite-gallery.css' type='text/css') 
+        link(rel='stylesheet' href='/unitegallery/skins/alexis/alexis.css' type='text/css')
+
+        //- link(rel='stylesheet' href='/materialnote/materialnote.css' type='text/css')
+        
+        link(rel='stylesheet' href='/dist/style.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/css/materialize.min.css')
+        link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/materialize-social@1.0.3/materialize-social.css')
+        link(href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous")
+        
+        link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
+        link(rel='icon' type='image/png' href='./public/images/favicon-32.png' sizes='32x32')
+
+        //- link(rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css")
+
+        
+        
+        
+        
+        
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        meta(name="keywords" content="vina,sava,nedo,kolekcija,vino,nedin,mutevelic")
+        meta(name="description" content="Nedin Mutevelić, moja kolekcija vina")
+        
+        
+
+    body(id=`${pageId}`)
+        block header
+            
+
+            .navbar-fixed  
+                
+                nav
+                    .nav-wrapper.brown
+                        a(href='/mojaKolekcijaVina') 
+                            img.moja-kolekcija-vina(src="/images/logo.svg", alt="mojaKolekcijaVina")
+                            
+                        a.sidenav-trigger(href='#' data-target='mobile-demo')
+                            i.material-icons menu
+                        ul.right.hide-on-med-and-down.right-margin
+
+
+                            li
+                                .searchbar
+                                    form.search-input
+                                        .input-field.valign-wrapper
+                                            if user
+                                                input#aa-search-input(type='search' placeholder="Pretraži Vina" class="input-uski" style="background-image: url('/images/algolia40.png'); background-repeat: no-repeat; text-indent: 2.2em;")
+                                                
+                                            else
+                                                input#aa-search-input(type='search' placeholder="Pretraži Vina" class="input-siroki" style="background-image: url('/images/algolia40.png'); background-repeat: no-repeat; text-indent: 2.2em;")
+                                                
+
+
+                            
+                                
+                            //- #aa-input-container.aa-input-container
+                            //-     input#aa-search-input.aa-input-search(type='search' placeholder='Search for players or teams...' name='search' autocomplete='off')
+                            //-     svg.aa-input-icon(viewbox='654 -372 1664 1664')
+                            //-         path(d='M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z')
+                                
+
+
+                            li
+                                a(href='/dodaj-vino')
+                                    i.fa.fa-plus-square.fa-2x.tooltip-icon(title="Dodaj vino" style="font-size: 1.4em")
+                            li
+                                a(href='/galerija') 
+                                    i.fa.fa-photo.fa-2x.tooltip-icon(title="Galerija" style="font-size: 1.4em")
+                           
+                            // Dropdown Trigger
+                            li
+                                a.dropdown-trigger(href='#!' data-target='dropdown1')
+                                    | Pretraga po
+                                    i.material-icons.right arrow_drop_down
+                            
+                            if !user
+
+                                li
+                                    a.green-text.text-lighten-2(href='/login') 
+                                        i.fa.fa-sign-in.fa-2x.tooltip-icon(title="Prijava" style="font-size: 1.4em")
+                                li
+                                    a(href='/auth/facebook')
+                                        i.fa.fa-facebook.fa-2x.tooltip-icon(title="FB prijava" style="color: #6392f5; font-size: 1.4em")
+                                li
+                                    a(href='/auth/google')
+                                        i.fa.fa-google.fa-2x.tooltip-icon(title="Google prijava" style="color: #db3236; font-size: 1.4em")                                
+                                li
+                                    a(href='/register') 
+                                        i.fa.fa-user-plus.fa-2x.tooltip-icon(title="Registracija" style="font-size: 1.4em")
+
+                            else if user.level > 10
+                                //- li
+                                //-    a(href='/forum')
+                                //-        i.fa.fa-list.fa-2x.tooltip-icon(title="Forum" style="font-size: 1.4em;")
+
+                                li
+                                    a.nav-slika(href=('/racun'))
+                                        img.circle.responsive-img.user-image(src=user.slika || user.gravatar)
+                                li #{user.ime} &nbsp;&nbsp;
+                                li
+                                    a(href='/logout').red-text.text-lighten-1
+                                        i.fa.fa-sign-out.fa-2x.tooltip-icon(title="Odjava" style="font-size: 1.4em")
+                                   
+                            else if user.level < 11
+                                //- li
+                                //-    a(href='/forum')
+                                //-        i.fa.fa-list.fa-2x.tooltip-icon(title="Forum" style="font-size: 1.4em")
+                                li  
+                                    a(href='/admin')
+                                        i.fa.fa-user.fa-2x.tooltip-icon(title="Admin panel" style="font-size: 1.4em")
+                                li
+                                    a.nav-slika(href=('/racun'))
+                                        img.circle.responsive-img.user-image(src=user.slika || user.gravatar)
+                                li #{user.ime} &nbsp;&nbsp;
+                                li
+                                    a(href='/logout').red-text.text-lighten-1
+                                        i.fa.fa-sign-out.fa-2x.tooltip-icon(title="Odjava" style="font-size: 1.4em")                                
+                                    
+
+
+
+                            
+        ul#mobile-demo.sidenav
+            if user 
+                li
+                    img.circle.responsive-img.user-image-mobile(src=user.slika || user.gravatar)
+                li
+                    a(href='/racun') #{user.ime}       
+                li.divider
+                li
+                    a(href='/mojaKolekcijaVina').mobile-home
+                        img(src="/images/logo-mobile.svg", alt="mojaKolekcijaVina")
+                li
+                    a(href='/galerija') Galerija
+                li
+                    a(href='/zemlje') Pretraga po Zemljama
+                li
+                    a(href='/vrste') Pretraga po Vrstama
+                li
+                    a(href='/korisnici') Pretraga po Korisnicima
+                li
+                    a(href='/godine') Pretraga po Godinama
+                li
+                    a(href='/zadnjeDodani') Najnovije dodana vina
+												   
+                li
+                    a(href='/logout') Odjava
+                hr
+                li
+                    a(href='/pretraga') Pretraga
+                li
+                    .searchbar
+                        form.search-input
+                            .input-field.valign-wrapper
+                            
+                                input#aa-search-input(type='search' placeholder="Pretraži Vina" class="input-uski" style="background-image: url('/images/algolia40.png'); background-repeat: no-repeat; text-indent: 2.2em;")
+                                                
+                
+            else
+                li
+                    a(href='/dodaj-vino') Novo Vino
+                li
+                    a(href='/galerija') Galerija
+                li
+                    a(href='/zemlje') Pretraga po Zemljama
+                li
+                    a(href='/vrste') Pretraga po Vrstama
+                li
+                    a(href='/korisnici') Pretraga po Korisnicima
+                li
+                    a(href='/godine') Pretraga po Godinama
+                li
+                    a(href='/zadnjeDodani') Najnovije dodana vina
+                li
+                    a(href='/login') Prijava
+                li
+                    a(href='/register') Registracija
+                hr
+                li
+                    a(href='/pretraga') Pretraga
+                li
+                    .searchbar
+                        form.search-input
+                            .input-field.valign-wrapper
+                            
+                                input#aa-search-input(type='search' placeholder="Pretraži Vina" class="input-uski" style="background-image: url('/images/algolia40.png'); background-repeat: no-repeat; text-indent: 2.2em;")
+                                                
+                                           
+                                
+                    
+                
+            
+            ul#dropdown1.dropdown-content
+                li
+                    a(href='/zemlje') Zemljama
+                li.divider
+                li
+                    a(href='/vrste') Vrstama
+                li.divider
+                li
+                    a(href='/korisnici') Korisnicima
+                li.divider
+                li
+                    a(href='/godine') Godinama
+                li.divider.brown.lighten-2
+                li
+                    a(href='/zadnjeDodani') Najnovije dodana vina
+
+
+
+
+        block messages
+            if locals.flashes
+                .container 
+                    .col.l10.offset-1              
+                        .flash-messages.center-align
+                            - const categories = Object.keys(locals.flashes)
+                            each category in categories
+                                each message in flashes[category]
+                                    .flash(class=`flash--${category}`)
+                                        p.flash__text!= message
+                                        
+            
+        block content
+
+        block footer
+            .row
+                .footer
+                    .p Saša Petrović - 2018
+
+        block scripts
+            script(src="https://use.fontawesome.com/46a5f844ac.js")
+            script(src='https://code.jquery.com/jquery-3.2.1.min.js', integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', crossorigin='anonymous')
+            //- script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js", integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=",  crossorigin="anonymous")
+            script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/js/materialize.min.js')
+            //- script(src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js")
+            script(src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js")
+            script(src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js")
+            
+            script(type='text/javascript' src='/unitegallery/js/unitegallery.min.js')
+            script(type='text/javascript' src='/unitegallery/themes/tiles/ug-theme-tiles.js')
+            
+            script(type='text/javascript' src='/sliphover/jquery.sliphover.js')
+            script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js')
+
+            script(src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js")
+            script(src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js")
+
+            script(type='text/javascript' src='https://unpkg.com/tippy.js@2.5.2/dist/tippy.all.min.js')
+
+            
+
+            script(type='text/javascript' src="/js/search.js")
+            script(src="/dist/App.bundle.js")      
+
+            

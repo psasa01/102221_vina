@@ -1,0 +1,42 @@
+mixin login-form
+
+    .container
+        .row
+            br
+            br
+            .z-depth-3.brown.lighten-5.col.s12.login-forma
+                form#loginForm(action='/login' method="POST")
+                    h4.login-h4.brown-text.center-align.col.s10.offset-s1 Molimo unesite podatke za prijavu
+                        hr
+                        
+                        .input-field.col.s10.offset-s1
+                            input#email.validate(type='email' name="email")
+                            label(for='email') Email
+                        .input-field.col.s10.offset-s1
+                            input#password.validate(type='password' name="password")
+                            label(for='password') Šifra
+                        .col.s10.offset-s1
+                            br
+                            .row
+                                a#btn-reg.btn-floating.btn-large.left.tooltip-icon(title="Facebook prijava" href='/auth/facebook' style="border-radius: 0; background-color: #3b5998")
+                                    i.fa.fa-facebook
+                                a#btn-reg.btn-floating.btn-large.left.tooltip-icon(title="Google prijava" href='/auth/google' style="border-radius: 0; background-color: #db3236")
+                                    i.fa.fa-google                               
+                                button#btn-reg.green.btn-floating.btn-large.right.tooltip-icon(title="Prijava" type='submit' style="border-radius: 0;")
+                                    i.fa.fa-sign-in
+
+                                
+                                    
+                        .col.s10.offset-s1
+                            label(style='float: right;')
+                                br
+                                a.pink-text(href='/reset')
+                                    b Zaboravili ste šifru?
+                                    
+                                    span.brown-text(style="font-size: 2em") &nbsp;&nbsp; | &nbsp;&nbsp;
+                                a.blue-text(href='/register')
+                                    b Registrujte se
+                                  
+
+
+            

@@ -1,0 +1,15 @@
+mixin forum-button
+
+    .fixed-action-btn.button-fab#home-button
+        a.btn-floating.btn-large.brown
+            i.large.material-icons keyboard_arrow_up
+        ul
+            li
+                a.btn-floating.red.tooltip(title="Početna" href=`/`)
+                    i.material-icons home
+            li
+                button.btn-floating.blue.tooltip(title="Nazad" onclick=`history.back()`)
+                    i.material-icons chevron_left
+            li
+                a.btn-floating.green.tooltip(title="Forum" href=`/forum`)
+                    i.material-icons list
