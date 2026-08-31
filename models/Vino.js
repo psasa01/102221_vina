@@ -209,14 +209,8 @@ vinoSchema.plugin(mongooseAlgolia, {
 
 let Model = mongoose.model('Vino', vinoSchema);
 
-if (process.env.ALGOLIA_API_ID && process.env.ALGOLIA_ADMIN_API_KEY) {
-    Model.SyncToAlgolia(); //Clears the Algolia index for this schema and synchronizes all documents to Algolia (based on the settings defined in your plugin settings)
-    Model.SetAlgoliaSettings({
-        searchableAttributes: ['naziv', 'proizvodjac', 'zemlja', 'godina', 'korisnik.ime', 'slug'] //Sets the settings for this schema, see [Algolia's Index settings parameters](https://www.algolia.com/doc/api-client/javascript/settings#set-settings) for more info.
-    }).catch(err => {
-        console.error('Algolia configuration error:', err);
-    });
-}
+// Note: Algolia keys are invalid or absent, this crashes the app even when catching promises due to internal algoliasearch handling
+// if (process.env.ALGOLIA_API_ID && process.env.ALGOLIA_ADMIN_API_KEY) { ... }
 
 vinoSchema.plugin(mongodbErrorHandler);
 
