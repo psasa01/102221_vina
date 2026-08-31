@@ -44,7 +44,7 @@ const styles = {
   use: ExtractTextPlugin.extract([
     "css-loader?sourceMap",
     postcss,
-    "sass-loader?sourceMap",
+    { loader: "sass-loader", options: { sourceMap: true, implementation: require("sass") } },
   ]),
 };
 
