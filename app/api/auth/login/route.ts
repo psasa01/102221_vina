@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import crypto from "node:crypto";
 import connectDB from "@/lib/mongodb";
-import User from "@/models/User";
+import { User } from "@/models/User";
 import { verifyLegacyPassword } from "@/lib/auth";
+import { createSession, sessionCookie } from "@/lib/session";
+
+export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   const form = await request.formData();
@@ -16,9 +17,8 @@ export async function POST(request: Request) {
     return NextResponse.redirect(new URL("/login?error=invalid", request.url));
   }
   if (user.active === false) return NextResponse.redirect(new URL("/login?error=inactive", request.url));
-  const token = crypto.randomBytes(32).toString("hex");
   const response = NextResponse.redirect(new URL("/mojaKolekcijaVina", request.url));
-  response.cookies.set("vina_session", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
-  // Session persistence is added below; token is intentionally only issued after a valid legacy password check.
+  response.cookies.set(sessionCookie, createSession(user._id.toString()), { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
+  await User.updateOne({ _id: user._id }, { $set: { zadnjiPutVidjen: new Date() } });
   return response;
 }
