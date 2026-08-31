@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
+import { dbConnect } from "@/lib/mongodb";
 import { User } from "@/models/User";
 import { verifyLegacyPassword } from "@/lib/auth";
 import { createSession, sessionCookie } from "@/lib/session";
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const email = String(form.get("email") || "").trim().toLowerCase();
   const password = String(form.get("password") || "");
   if (!email || !password) return NextResponse.redirect(new URL("/login?error=missing", request.url));
-  await connectDB();
+  await dbConnect();
   const user = await User.findOne({ email }).lean() as any;
   if (!user || !user.hash || !user.salt || !verifyLegacyPassword(password, user.hash, user.salt)) {
     return NextResponse.redirect(new URL("/login?error=invalid", request.url));
