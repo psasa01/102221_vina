@@ -1,0 +1,6 @@
+import Link from "next/link";
+import { dbConnect } from "@/lib/mongodb";
+import { Post } from "@/models/Post";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export default async function ForumPage() { await dbConnect(); const posts = await Post.find({}).sort({datum:-1}).lean(); return <main className="min-h-screen bg-stone-50"><div className="mx-auto max-w-5xl px-4 py-10"><div className="mb-8 flex items-end justify-between"><div><p className="text-sm uppercase tracking-[.18em] text-stone-500">Moja Kolekcija Vina</p><h1 className="mt-2 text-4xl font-semibold text-stone-900">Forum</h1></div><Link href="/forum/nova-tema" className="rounded-xl bg-stone-900 px-4 py-2 text-sm font-medium text-white">Nova tema</Link></div><div className="space-y-3">{posts.map((p:any)=><Link key={p._id.toString()} href={`/forum/post/${p._id}`} className="block rounded-2xl border border-stone-200 bg-white p-5 hover:shadow-md"><h2 className="font-semibold text-stone-900">{p.naslov}</h2><p className="mt-1 text-sm text-stone-500">{p.ime || "Korisnik"} · {p.odgovor?.length || 0} odgovora</p></Link>)}{posts.length===0&&<div className="rounded-2xl bg-white p-10 text-center text-stone-500">Forum trenutno nema tema.</div>}</div></div></main>; }

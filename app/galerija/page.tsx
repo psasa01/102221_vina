@@ -1,0 +1,4 @@
+import { dbConnect } from "@/lib/mongodb";
+import { Slika } from "@/models/Slika";
+export const runtime="nodejs"; export const dynamic="force-dynamic";
+export default async function GalerijaPage(){await dbConnect(); const slike=await Slika.find({}).sort({_id:-1}).lean(); return <main className="min-h-screen bg-stone-50"><div className="mx-auto max-w-7xl px-4 py-10"><p className="text-sm uppercase tracking-[.18em] text-stone-500">Moja Kolekcija Vina</p><h1 className="mt-2 text-4xl font-semibold text-stone-900">Galerija fotografija</h1><div className="mt-8 columns-1 gap-5 sm:columns-2 lg:columns-3">{slike.map((s:any)=><figure key={s._id.toString()} className="mb-5 break-inside-avoid overflow-hidden rounded-2xl bg-white shadow-sm"><img src={`/images/big/big_${s.big}`} alt={s.opis||"Fotografija"} className="w-full"/><figcaption className="p-3 text-sm text-stone-600">{s.opis}</figcaption></figure>)}</div></div></main>}
