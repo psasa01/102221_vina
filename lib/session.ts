@@ -1,9 +1,12 @@
 import crypto from "node:crypto";
 
 const COOKIE = "vina_session";
-const secret = process.env.SESSION_SECRET || "change-this-session-secret";
+const secret = process.env.AUTH_SECRET;
 
 function sign(value: string) {
+  if (!secret) {
+    throw new Error("AUTH_SECRET environment variable is required");
+  }
   return crypto.createHmac("sha256", secret).update(value).digest("hex");
 }
 
@@ -21,7 +24,8 @@ export function readSession(value?: string | null) {
     const expected = sign(payload);
     if (signature.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return null;
     const [userId, expires] = payload.split(".");
-    if (!userId || Number(expires) < Date.now()) return null;
+    const expiration = Number(expires);
+    if (!userId || !Number.isSafeInteger(expiration) || expiration <= Date.now()) return null;
     return userId;
   } catch { return null; }
 }
